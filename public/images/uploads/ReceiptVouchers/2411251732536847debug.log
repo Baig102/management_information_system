@@ -1,0 +1,2 @@
+[10204:10208:0926/063614.817:VERBOSE1:installer.cc(383)] "C:\Users\Seven Zones\Downloads\ChromeSetup.exe" --install=appguid={8A69D345-D564-463C-AFF1-A69D9E530F96}&iid={AC594FF3-A391-B916-1FC5-77C77DB4D9BC}&lang=en&browser=5&usagestats=1&appname=Google%20Chrome&needsadmin=prefers&ap=x64-statsdef_1&installdataindex=empty --enable-logging --vmodule=*/components/winhttp/*=1,*/components/update_client/*=2,*/chrome/updater/*=2
+[10204:10208:0926/063626.038:VERBOSE1:installer.cc(488)] Metainstaller WMain returned: 73500, Windows error: 0

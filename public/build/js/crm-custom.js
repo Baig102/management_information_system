@@ -1,0 +1,1138 @@
+function initializeSelect2WithAjax(selector, ajaxUrl, placeholder, dropdownParent = null) {
+    //$(selector).select2('destroy');
+    //console.log(selector, ajaxUrl, placeholder);
+    // Destroy existing Select2 instance if already initialized
+    // Destroy existing Select2 instance if already initialized
+    if ($(selector).data('select2')) {
+        $(selector).select2('destroy');
+    }
+    $(selector).select2({
+        ajax: {
+            url: ajaxUrl,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    query: params.term, // search term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            //id: item.id,
+                            id: item.name,
+                            text: item.name, // assuming 'name' is the field you want to display
+                        };
+                    }),
+                };
+            },
+            cache: true,
+        },
+        placeholder: placeholder,
+        //allowClear: true,
+        minimumInputLength: 2, // minimum number of characters before the AJAX request
+        //dropdownParent: $(selector).closest('.modal')
+        dropdownParent: dropdownParent ? $(selector).closest(dropdownParent) : undefined
+    });
+}
+/**
+ * Loader
+ */
+/* $(document).ready(function () {
+    // Show loader on AJAX start
+    $(document).ajaxStart(function () {
+        $('#flightLoader').show();
+    });
+
+    // Hide loader on AJAX stop
+    $(document).ajaxStop(function () {
+        $('#flightLoader').hide();
+    });
+}); */
+
+$(document).ready(function () {
+    // Show loader on page load (for refresh or direct page load)
+    $(window).on('load', function () {
+        $('#flightLoader').fadeOut();
+    });
+
+    // Show loader on AJAX start
+    $(document).ajaxStart(function () {
+        $('#flightLoader').show();
+    });
+
+    // Hide loader on AJAX stop
+    $(document).ajaxStop(function () {
+        $('#flightLoader').fadeOut();
+    });
+
+    // Show loader before form submission (for regular form submissions)
+    $('form').on('submit', function () {
+        $('#flightLoader').show();
+    });
+
+    // Handle page unload or refresh: show loader
+    $(window).on('beforeunload', function () {
+        $('#flightLoader').show();
+    });
+
+    // For any async operation or long process, you might want to show the loader
+    // For example, you could use this if there are background tasks triggering the loader
+});
+
+
+/**
+ * Booking JS
+ */
+
+/* function view_booking(id) {
+    $.ajax({
+        type: 'GET',
+        url: 'view-booking/' + id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.modal-content').show().html(r);
+            $('.modal.fullscreeexampleModal').modal('show');
+
+        }
+    });
+} */
+
+function view_booking(id) {
+    const url = viewBookingUrl.replace('booking_id', id);
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (r) {
+            //console.log(r);
+            $('.fullscreeexampleModal .modal-content').show().html(r);
+            $('.modal.fullscreeexampleModal').modal('show');
+        },
+        error: function (xhr) {
+            console.log(xhr);
+            console.error('Error:', xhr);
+            // Optionally handle the error, e.g., show a message to the user
+        }
+    });
+};
+
+function edit_passenger(booking_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'edit-passenger/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_booking_information(booking_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'edit-booking-information/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+function edit_hotel_details(booking_id) {
+    //console.log(booking_id);
+    $.ajax({
+        type: 'GET',
+        url: 'edit-hotel-details/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_hotels_actual_net(booking_id) {
+    //console.log(booking_id);
+    $.ajax({
+        type: 'GET',
+        url: 'hotel-actual-net/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_transport_actual_net(booking_id) {
+    //console.log(booking_id);
+    $.ajax({
+        type: 'GET',
+        url: 'transport-actual-net/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_visa_actual_net(booking_id) {
+    //console.log(booking_id);
+    $.ajax({
+        type: 'GET',
+        url: 'visa-actual-net/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_flights_actual_net(booking_id) {
+    //console.log(booking_id);
+    $.ajax({
+        type: 'GET',
+        url: 'flight-actual-net/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_transport_details(booking_id) {
+    //console.log(booking_id);
+    $.ajax({
+        type: 'GET',
+        url: 'edit-transport-details/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_visa_details(booking_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'edit-visa-details/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_flight_details(booking_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'edit-flight-details/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_installment_plan(id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'add-installment-plan/' + id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_installment_plan(id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'edit-installment-plan/' + id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_payment(id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'add-payment/' + id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_payment(booking_id, payment_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'edit-payment/' + booking_id + '/' + payment_id, // in here you should put your query
+        success: function (r) {
+
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_other_charges(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'add-other-charges/' + booking_id, // in here you should put your query
+        success: function (r) {
+
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_oc_payment(booking_id, other_charges_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'add-oc-payment/' + booking_id + '/' + other_charges_id, // in here you should put your query
+        success: function (r) {
+
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_other_charges(booking_id,other_charges_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'edit-other-charges/' + booking_id + '/' + other_charges_id, // in here you should put your query
+        success: function (r) {
+
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function update_ticket_status(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'update-ticket-status/' + booking_id, // in here you should put your query
+        success: function (r) {
+
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function update_booking_status(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'update-booking-status/' + booking_id, // in here you should put your query
+        success: function (r) {
+
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+/* function add_refund(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'add-refund/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+}; */
+function add_refund(booking_id) {
+    const url = addRefundUrl.replace('booking_id', booking_id);
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (r) {
+            //console.log(r);
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+        },
+        error: function (xhr) {
+            console.error('Error:', xhr);
+            //alert('Error:', xhr.statusText);
+            Swal.fire({
+                title: 'Error',
+                icon: 'error',
+                text: 'Error: ' + xhr.status + ' - ' + xhr.statusText,
+            });
+        }
+    });
+};
+function edit_refund(booking_id, refund_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'edit-refund/' + booking_id + '/' + refund_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_hotels_refund(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'add-hotel-refund/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_pricing(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'edit-pricing/' + booking_id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function view_send_email(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'send-invoice-email-view/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function calculateHotelPricing(){
+
+    $('#quantity_5').val('1');
+    let total_sales_cost = 0
+    let total_net_cost = 0
+    $(".hotel_sale_cost").each(function (key, value) {
+        //console.log(key + ": " + $(this).val());
+        total_sales_cost = total_sales_cost + +$(this).val();
+    });
+    $('#netCost_5').val(total_sales_cost);
+    $(".hotel_net_cost").each(function (key, value) {
+        //console.log(key + ": " + $(this).val());
+        total_net_cost = total_net_cost + +$(this).val();
+    });
+    $('#netPrice_5').val(total_net_cost);
+    if (total_sales_cost == 0 && total_net_cost == 0) {
+        $('#quantity_5').val('0');
+    }
+    calculations('netPrice_5');
+};
+
+function calculateTransportPricing(){
+
+    $('#quantity_6').val('1');
+    let total_sales_cost = 0
+    let total_net_cost = 0
+
+    $(".transport_sale_cost").each(function (key, value) {
+        //console.log(key + ": " + $(this).val());
+        total_sales_cost = total_sales_cost + +$(this).val();
+    });
+    $('#netCost_6').val(total_sales_cost);
+
+    $(".transport_net_cost").each(function (key, value) {
+        //console.log(key + ": " + $(this).val());
+        total_net_cost = total_net_cost + +$(this).val();
+    });
+    $('#netPrice_6').val(total_net_cost);
+    if (total_sales_cost == 0 && total_net_cost == 0) {
+        $('#quantity_6').val('0');
+    }
+    calculations('netPrice_6');
+};
+
+function calculateVisaPricing(){
+
+    let total_sales_cost = 0
+    let total_net_cost = 0
+    let quantity = 0;
+
+    $(".no_of_pax").each(function (key, value) {
+        quantity = quantity + +$(this).val();
+    });
+
+    $('#quantity_7').val('1');
+    $(".visa_sale_cost").each(function (key, value) {
+        //console.log(key + ": " + $(this).val());
+        total_sales_cost = total_sales_cost + +$(this).val();
+    });
+
+    $('#netCost_7').val(total_sales_cost);
+
+    $(".visa_net_cost").each(function (key, value) {
+        //console.log(key + ": " + $(this).val());
+        total_net_cost = total_net_cost + +$(this).val();
+    });
+    $('#netPrice_7').val(total_net_cost);
+    if (total_sales_cost == 0 && total_net_cost == 0) {
+        $('#quantity_7').val('0');
+    }
+    calculations('netPrice_7');
+};
+
+function view_booking_log(booking_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'view-booking-log/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_pnr(booking_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'edit-pnr/' + booking_id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function edit_booking_comments(booking_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'edit-booking-comments/' + booking_id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+function add_booking_internal_comments(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'add-booking-internal-comments/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+/**
+ * PNR
+ */
+// Array to hold all fetched pnrKey values
+let fetchedPnrKeys = [];
+/* function getPnrDetails(row_no){
+    //e.preventDefault();
+    //let pnr = $('#pnr').val();
+    let pnr = $('#pnr_'+row_no).val();
+    //console.log(pnr);
+    if (!pnr) {
+
+        Swal.fire({
+            title: 'Warning',
+            icon: 'warning',
+            text: 'Please enter valid PNR',
+        });
+        return 0;
+    }
+
+    $.ajax({
+        url: '/api/convert-pnr-expert',
+        //url: "{{ route('convert-pnr-expert') }}",//"{{ route('convert-pnr') }}",
+        method: 'POST',
+        data: {
+            pnr: pnr,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(response){
+            //console.log(response);
+            var pnrKey = response.pnrKey;
+            var pnrData = JSON.parse(response.pnrResponse);
+            console.log(pnrData);
+            // Check if the pnrKey already exists in the array
+            if (fetchedPnrKeys.includes(pnrKey)) {
+                // If the key exists, show an error and prevent further processing
+                Swal.fire({
+                    title: 'Error',
+                    icon: 'error',
+                    text: 'This PNR has already been fetched!',
+                });
+                return;  // Exit the function early
+            }
+
+            // If the pnrKey is unique, add it to the array
+            fetchedPnrKeys.push(pnrKey);
+
+            var pnrResponseData = {
+                'pnrKey':pnrKey,
+                'pnrData':pnrData,
+            }
+
+            $('#pnrFetchDetails_'+row_no).prop('disabled', true);
+            $('#pnr_'+row_no).prop('readonly', true);
+            $('.remove_pnr_row_'+row_no).attr('id', pnrKey);
+
+            $('#pnr_json_data_'+row_no).val(JSON.stringify(response));
+            var flights = pnrData.data.flights;
+            var passengers = pnrData.data.passengers;
+
+            //console.log(response, pnrData, flights, passengers);
+
+            $(passengers).each(function(key, value){
+
+                var key = key+1;
+
+                var fullName = (value.name).trim(); // :"1BASHIR/SHAHID MR ";
+                fullNameArray = fullName.split(' ');
+                fullNameData = fullNameArray[0];
+                title = (fullNameArray[1]).toLowerCase()+'.';
+                fullNameDataArray = fullNameData.split('/');
+                var firstName = fullNameDataArray[1];
+                var middleName = (fullNameDataArray[0]).replace("1", "");
+
+                add_passenger_rows();
+
+                var lastRow = $('.passenger_info').last();
+                lastRow.addClass(pnrKey);
+                lastRow.find('.first_name').val(firstName).attr('readonly', true);
+                lastRow.find('.middle_name').val(middleName).attr('readonly', true);
+
+                var $titleSelect = lastRow.find('.title');
+                // Find and select the option that matches the title
+                $titleSelect.find('option').each(function() {
+                    if ($(this).val().toLowerCase() === title) {
+                        $(this).attr('selected', true);
+                    }
+                });
+
+                 // Disable the select element
+                 lastRow.find('.title').select2('destroy').select2();
+                 //$('#title_'+key).select2();
+                 //$titleSelect.prop('disabled', true);
+                 $("#add_passenger_button").remove();
+                 lastRow.find('.remove_row').remove()
+                 lastRow.find('.pnr_key').val(pnrKey);
+
+            });
+
+            $(flights).each(function(key, value){
+            //console.log(key, value, value.arr, value.dep, value.flt, value.dep.airportname, value.arr.airportname);
+
+                departure = value.departingFrom;
+                arrival = value.arrivingAt;
+                flight = value.aircraftType;
+                //console.log(value);
+                add_flight_rows();
+
+                var lastRow = $('.flight_info').last(); // Assuming flight rows have the class 'flight_info'
+                lastRow.addClass(pnrKey);
+                lastRow.find('.flight_number').val(value.flightNumber);
+
+                var departureAirport = lastRow.find('.departure_airports');
+                // Add the option dynamically
+                var departureOption = new Option(departure.airportName, departure.airportName);
+                departureAirport.append(departureOption).trigger('change');
+                // Disable the Select2 field to prevent re-selection
+                departureAirport.prop('readonly', true);
+
+                // Find the arrival_airport_ field
+                var arrivalAirport = lastRow.find('.arrival_airports');
+                // Add the option dynamically
+                var arrivalOption = new Option(arrival.airportName, arrival.airportName);
+                arrivalAirport.append(arrivalOption).trigger('change');
+                // Disable the Select2 field to prevent re-selection
+                arrivalAirport.prop('readonly', true);
+
+                // Extract the departure date and time
+                var departureString = departure.time; // "2024-10-16 01:35"
+                var arrivalString = arrival.time;     // "2024-10-16 05:15"
+
+                // Separate date and time
+                var departureDate = departureString.split('T')[0]; // "2024-10-16"
+                var departureTime = departureString.split('T')[1]; // "01:35"
+                var arrivalDate = arrivalString.split('T')[0];     // "2024-10-16"
+                var arrivalTime = arrivalString.split('T')[1];     // "05:15"
+
+                // Convert 24-hour format to 12-hour format with AM/PM
+                // Helper function to check if time is in 12-hour format
+                var is12HourFormat = function(time) {
+                    return time.match(/(AM|PM)$/i);
+                };
+
+
+                // Convert time to 24-hour format if in 12-hour format
+                var timeTo24HourFormat = function(time) {
+                    // Check if the time is in the new format
+                    var timeParts = time.match(/^(\d{2}):(\d{2}):\d{2}\.\d{3}([+-]\d{2}:\d{2})$/);
+                    if (timeParts) {
+                        // If it's already in 24-hour format, return HH:mm
+                        return timeParts[1] + ':' + timeParts[2]; // Return only hours and minutes
+                    }
+
+                    // Handle 12-hour format if necessary
+                    if (!is12HourFormat(time)) {
+                        return time; // Return original value if not in 12-hour format
+                    }
+
+                    // Previous logic for 12-hour format
+                    timeParts = time.match(/(\d+):(\d+)\s*(AM|PM)/i);
+                    if (!timeParts) {
+                        console.error("Invalid time format: " + time);
+                        alert("Invalid time format: " + time);
+                        return time; // Return the original value if no match
+                    }
+
+                    var hours = parseInt(timeParts[1], 10);
+                    var minutes = timeParts[2];
+                    var period = timeParts[3];
+
+                    if (period.toUpperCase() === 'PM' && hours < 12) hours += 12;
+                    if (period.toUpperCase() === 'AM' && hours === 12) hours = 0;
+
+                    // Format to HH:mm
+                    return (hours < 10 ? '0' : '') + hours + ':' + minutes;
+                };
+
+                var departureTime12Hr = timeTo24HourFormat(departureTime);
+                var arrivalTime12Hr = timeTo24HourFormat(arrivalTime);
+                var flight_number = value.iataCode+' '+value.flightNumber;
+                lastRow.find('.flight_number').val(flight_number);
+                lastRow.find('.departure_date').val(departureDate);
+                lastRow.find('.departure_time').val(departureTime12Hr);
+                lastRow.find('.arrival_date').val(arrivalDate);
+                lastRow.find('.arrival_time').val(arrivalTime12Hr);
+                //lastRow.find('.booking_class').val(value.cabin);
+
+                // Find the airline name field
+                //var airlineName = $('#air_line_name_'+key);
+                var airlineName = lastRow.find('.air_line_name');
+                // Add the option dynamically
+                var airlineOption = new Option(value.airlineName, value.airlineName);
+                airlineName.append(airlineOption).trigger('change');
+                // Disable the Select2 field to prevent re-selection
+                //airlineName.prop('disabled', true);
+                airlineName.prop('readonly', true);
+                $('.gds_no').prop('readonly', false);
+                $('.airline_locator').prop('readonly', false);
+
+
+                lastRow.find('.booking_class').val(value.cabin);
+                //$('#title_'+key).select2();
+                //$bookingClass.prop('disabled', true);
+
+                // Apply readonly to all input fields except select elements
+                lastRow.find('input').not('select').each(function() {
+                    $(this).prop('readonly', true); // Make input fields readonly
+                });
+
+                lastRow.find('.pnr_key').val(pnrKey);
+
+                $("#add_flight_button").remove();
+                lastRow.find('.remove_flight').remove();
+
+                // Append transit time and duration
+                var transitTime = flight.transit_time;
+                var duration = flight.duration;
+            });
+
+
+        },
+        error: function(xhr){
+            //console.log(xhr);
+            //$('#pnrResult').html('Error: ' + xhr.status + ' - ' + xhr.statusText);
+            Swal.fire({
+                title: 'Error',
+                icon: 'error',
+                text: 'Error: ' + xhr.status + ' - ' + xhr.statusText,
+            });
+        }
+    });
+}; */
+
+function getPnrDetails(row_no){
+    //e.preventDefault();
+    //let pnr = $('#pnr').val();
+    let pnr = $('#pnr_'+row_no).val();
+    let supplier = $('#pnrFlightSupplier_'+row_no).val();
+    //console.log(pnr);
+    if (!pnr) {
+
+        Swal.fire({
+            title: 'Warning',
+            icon: 'warning',
+            text: 'Please enter valid PNR',
+        });
+        return 0;
+    }
+
+    if (!supplier) {
+
+        Swal.fire({
+            title: 'Warning',
+            icon: 'warning',
+            text: 'Please select valid PNR Supplier',
+        });
+        return 0;
+    }
+
+    $.ajax({
+        url: '/api/convert-pnr-expert',
+        //url: "{{ route('convert-pnr-expert') }}",//"{{ route('convert-pnr') }}",
+        method: 'POST',
+        data: {
+            pnr: pnr,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(response){
+
+            var pnrKey = response.pnrKey;
+            var pnrData = JSON.parse(response.pnrResponse);
+            // console.log(pnrData);
+            // Check if the pnrKey already exists in the array
+            if (fetchedPnrKeys.includes(pnrKey)) {
+                // If the key exists, show an error and prevent further processing
+                Swal.fire({
+                    title: 'Error',
+                    icon: 'error',
+                    text: 'This PNR has already been fetched!',
+                });
+                return;  // Exit the function early
+            }
+
+            // If the pnrKey is unique, add it to the array
+            fetchedPnrKeys.push(pnrKey);
+
+            var pnrResponseData = {
+                'pnrKey':pnrKey,
+                'pnrData':pnrData,
+            }
+
+            $('#pnrFetchDetails_'+row_no).prop('disabled', true);
+            $('#pnr_'+row_no).prop('readonly', true);
+            $('.remove_pnr_row_'+row_no).attr('id', pnrKey);
+
+            $('#pnr_json_data_'+row_no).val(JSON.stringify(response));
+            var flights = pnrData.data.flights;
+            var passengers = pnrData.data.passengers;
+
+            //console.log(response, pnrData, flights, passengers);
+
+            $(passengers).each(function(key, value){
+
+                var key = key+1;
+
+                var fullName = (value.name).trim(); // :"1BASHIR/SHAHID MR ";
+                // fullNameArray = fullName.split(' ');
+                // fullNameData = fullNameArray[0];
+                // title = (fullNameArray[1]).toLowerCase()+'.';
+                // fullNameDataArray = fullNameData.split('/');
+                // var firstName = fullNameDataArray[1];
+                // var middleName = (fullNameDataArray[0]).replace("1", "");
+                //BASHIR/SHAHID MR
+
+                // Extract the parts before and after the slash
+                var nameParts = fullName.split('/');
+
+                var lastName = nameParts[0];  // Last name
+                var firstMiddleName = nameParts[1];  // First and middle name (if available)
+
+                // Separate first name and middle name (if applicable)
+                var firstName = '';
+                var middleName = '';
+                var title = '';
+
+                // Find the title by checking if the last word is a title (MR, MRS, etc.)
+                var nameWords = firstMiddleName.split(' ');
+                var lastWord = nameWords[nameWords.length - 1].toUpperCase();
+
+                // If the last word is a title, then it's the title
+                if (lastWord === 'MR' || lastWord === 'MS' || lastWord === 'MRS' || lastWord === 'MISS' || lastWord === 'MSTR') {
+                    title = lastWord;
+                    // Remove the title from the name
+                    nameWords.pop();
+                }
+
+                // Now we can separate first and middle name
+                firstName = nameWords[0];  // First name is the first word
+                middleName = nameWords.slice(1).join(' ');  // Middle name is the rest (if any)
+
+                // Log or process the separated values
+                // console.log({
+                //     lastName: lastName,
+                //     firstName: firstName,
+                //     middleName: middleName,
+                //     title: title
+                // });
+
+
+                add_passenger_rows();
+
+                var lastRow = $('.passenger_info').last();
+                lastRow.addClass(pnrKey);
+                lastRow.find('.first_name').val(firstName).attr('readonly', true);
+                lastRow.find('.middle_name').val(middleName).attr('readonly', true);
+                lastRow.find('.last_name').val(lastName).attr('readonly', true);
+
+                var $titleSelect = lastRow.find('.title');
+                // Find and select the option that matches the title
+                $titleSelect.find('option').each(function() {
+                    //console.log($(this).val().toLowerCase(),title.toLowerCase());
+                    if ($(this).val().toLowerCase() === title.toLowerCase()) {
+                        $(this).attr('selected', true);
+                    }
+                });
+
+                 // Disable the select element
+                 lastRow.find('.title').select2('destroy').select2();
+                 //$('#title_'+key).select2();
+                 //$titleSelect.prop('disabled', true);
+                 $("#add_passenger_button").remove();
+                 lastRow.find('.remove_row').remove()
+                 lastRow.find('.pnr_key').val(pnrKey);
+
+            });
+
+            $(flights).each(function(key, value){
+            //console.log(key, value, value.arr, value.dep, value.flt, value.dep.airportname, value.arr.airportname);
+
+                departure = value.departingFrom;
+                arrival = value.arrivingAt;
+                flight = value.aircraftType;
+                //console.log(value);
+                add_flight_rows();
+
+                var lastRow = $('.flight_info').last(); // Assuming flight rows have the class 'flight_info'
+                lastRow.addClass(pnrKey);
+                //lastRow.find('.flight_number').val(value.flightNumber);
+
+                var departureAirport = lastRow.find('.departure_airports');
+                // Add the option dynamically
+                var departureOption = new Option(departure.airportName, departure.airportName);
+                departureAirport.append(departureOption).trigger('change');
+                // Disable the Select2 field to prevent re-selection
+                departureAirport.prop('readonly', true);
+
+                // Find the arrival_airport_ field
+                var arrivalAirport = lastRow.find('.arrival_airports');
+                // Add the option dynamically
+                var arrivalOption = new Option(arrival.airportName, arrival.airportName);
+                arrivalAirport.append(arrivalOption).trigger('change');
+                // Disable the Select2 field to prevent re-selection
+                arrivalAirport.prop('readonly', true);
+
+                // Extract the departure date and time
+                var departureString = departure.time; // "2024-10-16 01:35"
+                var arrivalString = arrival.time;     // "2024-10-16 05:15"
+
+                // Separate date and time
+                var departureDate = departureString.split('T')[0]; // "2024-10-16"
+                var departureTime = departureString.split('T')[1]; // "01:35"
+                var arrivalDate = arrivalString.split('T')[0];     // "2024-10-16"
+                var arrivalTime = arrivalString.split('T')[1];     // "05:15"
+
+                // Convert 24-hour format to 12-hour format with AM/PM
+                // Helper function to check if time is in 12-hour format
+                var is12HourFormat = function(time) {
+                    return time.match(/(AM|PM)$/i);
+                };
+
+
+                // Convert time to 24-hour format if in 12-hour format
+                var timeTo24HourFormat = function(time) {
+                    // Check if the time is in the new format
+                    var timeParts = time.match(/^(\d{2}):(\d{2}):\d{2}\.\d{3}([+-]\d{2}:\d{2})$/);
+                    if (timeParts) {
+                        // If it's already in 24-hour format, return HH:mm
+                        return timeParts[1] + ':' + timeParts[2]; // Return only hours and minutes
+                    }
+
+                    // Handle 12-hour format if necessary
+                    if (!is12HourFormat(time)) {
+                        return time; // Return original value if not in 12-hour format
+                    }
+
+                    // Previous logic for 12-hour format
+                    timeParts = time.match(/(\d+):(\d+)\s*(AM|PM)/i);
+                    if (!timeParts) {
+                        console.error("Invalid time format: " + time);
+                        return time; // Return the original value if no match
+                    }
+
+                    var hours = parseInt(timeParts[1], 10);
+                    var minutes = timeParts[2];
+                    var period = timeParts[3];
+
+                    if (period.toUpperCase() === 'PM' && hours < 12) hours += 12;
+                    if (period.toUpperCase() === 'AM' && hours === 12) hours = 0;
+
+                    // Format to HH:mm
+                    return (hours < 10 ? '0' : '') + hours + ':' + minutes;
+                };
+
+                var flightSupplier = lastRow.find('.flight_supplier');
+                // Add the option dynamically
+                var supplierOption = new Option(supplier, supplier);
+                flightSupplier.append(supplierOption).trigger('change');
+                // Disable the Select2 field to prevent re-selection
+                flightSupplier.prop('readonly', true);
+
+                var departureTime12Hr = timeTo24HourFormat(departureTime);
+                var arrivalTime12Hr = timeTo24HourFormat(arrivalTime);
+
+                var flight_number = value.iataCode+' '+value.flightNumber;
+
+                lastRow.find('.airline_locator').val(value.airlineLocator);
+                lastRow.find('.flight_number').val(flight_number);
+                //lastRow.find('.flight_number').val(value.flightNumber);
+                lastRow.find('.departure_date').val(departureDate);
+                lastRow.find('.departure_time').val(departureTime12Hr);
+                lastRow.find('.arrival_date').val(arrivalDate);
+                lastRow.find('.arrival_time').val(arrivalTime12Hr);
+                //lastRow.find('.booking_class').val(value.cabin);
+
+                // Find the airline name field
+                //var airlineName = $('#air_line_name_'+key);
+                var airlineName = lastRow.find('.air_line_name');
+                // Add the option dynamically
+                var airlineOption = new Option(value.airlineName, value.airlineName);
+                airlineName.append(airlineOption).trigger('change');
+                // Disable the Select2 field to prevent re-selection
+                //airlineName.prop('disabled', true);
+                airlineName.prop('readonly', true);
+
+
+                lastRow.find('.booking_class').val(value.cabin);
+                //$('#title_'+key).select2();
+                //$bookingClass.prop('disabled', true);
+
+                // Apply readonly to all input fields except select elements
+                lastRow.find('input').not('select').each(function() {
+                    $(this).prop('readonly', true); // Make input fields readonly
+                });
+
+                lastRow.find('.pnr_key').val(pnrKey);
+
+                $("#add_flight_button").remove();
+                lastRow.find('.remove_flight').remove();
+
+                // Append transit time and duration
+                var transitTime = flight.transit_time;
+                var duration = flight.duration;
+            });
+
+
+        },
+        error: function(xhr){
+            //console.log(xhr);
+            //$('#pnrResult').html('Error: ' + xhr.status + ' - ' + xhr.statusText);
+            Swal.fire({
+                title: 'Error',
+                icon: 'error',
+                text: 'Error: ' + xhr.status + ' - ' + xhr.statusText,
+            });
+        }
+    });
+};
+function add_pnr(booking_id) {
+    //$('.modal.fullscreeexampleModal').modal('toggle');
+    $.ajax({
+        type: 'GET',
+        url: 'add-pnr/' + booking_id, // in here you should put your query
+        success: function (r) {
+            $('.extraLargeModal .modal-content').html(r);
+            $('.modal.extraLargeModal').modal('show');
+
+        }
+    });
+};
+
+/**
+ * Inquiries JS
+ */
+
+function view_inquiry(inquiry_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'view-inquiry/' + inquiry_id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.modal-content').show().html(r);
+            $('.modal.fullscreeexampleModal').modal('show');
+
+        }
+    });
+}
+function inquiry_communicate(inquiry_id, inquiry_assigment_id) {
+    $.ajax({
+        type: 'GET',
+        url: 'view-inquiry-communicate/' + inquiry_id + '/' + inquiry_assigment_id, // in here you should put your query
+        success: function (r) {
+            //console.log(r);
+            $('.largeModal .modal-content').html(r);
+            $('.modal.largeModal').modal('show');
+
+        }
+    });
+}

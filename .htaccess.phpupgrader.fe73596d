@@ -1,0 +1,36 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>
+
+deny from 103.156.200.161
+deny from 85.121.204.112
+deny from 108.177.131.187
+deny from 45.178.173.115
+deny from 176.126.111.76
+deny from 212.56.203.142
+deny from 217.173.179.76
+deny from 38.47.35.47
+deny from 41.139.163.153
+deny from 110.235.255.190
+deny from 5.190.208.139
+deny from 178.216.26.149
+deny from 23.105.151.224
+deny from 103.159.155.80
+deny from 203.150.165.190
+deny from 37.130.59.76
+deny from 116.212.153.116
+deny from 45.248.173.215
+deny from 203.189.135.133
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

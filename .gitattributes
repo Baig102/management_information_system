@@ -1,0 +1,28 @@
+# Force all text files to use LF (good for Linux/Mac servers)
+* text eol=lf
+
+# Windows batch/shell scripts should keep CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Shell scripts should use LF
+*.sh text eol=lf
+
+# Keep binary files untouched
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.exe binary
+
+# GitHub linguist configs (for stats only)
+*.css linguist-vendored
+*.scss linguist-vendored
+*.js linguist-vendored
+
+# Don’t export changelog
+CHANGELOG.md export-ignore
