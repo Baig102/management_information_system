@@ -1,10 +1,12 @@
 <!doctype html>
-<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="sm-hover" data-sidebar-image="none" data-preloader="enable">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" data-layout="vertical" data-topbar="light"
+    data-sidebar="dark" data-sidebar-size="sm-hover" data-sidebar-image="none" data-preloader="enable">
 
 <head>
     <meta charset="utf-8" />
     <title><?php echo $__env->yieldContent('title'); ?> | Seven Zones - CMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <!-- <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" /> -->
     <meta content="Umair Mehmood Khan Lodhi (info.devumair@gmail.com)" name="author" />
     <!-- App favicon -->
@@ -111,5 +113,4 @@
 
 </body>
 
-</html>
-<?php /**PATH /home/ashraf/Documents/web_dev/mis/resources/views/layouts/master-ams.blade.php ENDPATH**/ ?>
+</html><?php /**PATH /home/ashraf/Documents/web_dev/mis/resources/views/layouts/master-ams.blade.php ENDPATH**/ ?>
