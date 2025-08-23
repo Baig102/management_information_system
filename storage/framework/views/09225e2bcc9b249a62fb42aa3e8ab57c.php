@@ -20,7 +20,8 @@
                 <img src="<?php echo e(URL::asset('build/images/logo-light.png')); ?>" alt="" height="17">
             </span>
         </a>
-        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+            id="vertical-hover">
             <i class="ri-record-circle-line"></i>
         </button>
     </div>
@@ -33,7 +34,8 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span><?php echo app('translator')->get('translation.menu'); ?></span></li>
                 <li class="nav-item d-none">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarDashboards">
                         <i class="las la-tachometer-alt"></i> <span><?php echo app('translator')->get('translation.dashboards'); ?></span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarDashboards">
@@ -45,36 +47,73 @@
                     </div>
                 </li> <!-- end Dashboard Menu -->
 
+                <!-- Setups Menu -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarVendors" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarVendors">
-                        <i class="las la-columns"></i> <span>Vendors</span>
+                    <a class="nav-link menu-link" href="#sidebarSetups" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarSetups">
+                        <i class="las la-cog"></i> <span>Setups</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarVendors">
+                    <div class="collapse menu-dropdown" id="sidebarSetups">
                         <ul class="nav nav-sm flex-column">
+                            <!-- Vendors Submenu -->
                             <li class="nav-item">
-                                <a href="<?php echo e(route('ams.vendor.add')); ?>" class="nav-link">New Vendor</a>
+                                <a class="nav-link menu-link" href="#sidebarVendors" data-bs-toggle="collapse"
+                                    role="button" aria-expanded="false" aria-controls="sidebarVendors">
+                                    <span>Vendors</span>
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarVendors">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="<?php echo e(route('ams.vendor.add')); ?>" class="nav-link">New Vendor</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="<?php echo e(route('ams.vendor.index')); ?>" class="nav-link">Vendors List</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
+
+                            <!-- Business Customers Submenu -->
                             <li class="nav-item">
-                                <a href="<?php echo e(route('ams.vendor.index')); ?>" class="nav-link">Vendors List</a>
+                                <a class="nav-link menu-link" href="#sidebarBusinessCustomer" data-bs-toggle="collapse"
+                                    role="button" aria-expanded="false" aria-controls="sidebarBusinessCustomer">
+                                    <span>Business Customers</span>
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarBusinessCustomer">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="<?php echo e(route('ams.businessCustomer.add')); ?>" class="nav-link">New
+                                                Business Customer</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="<?php echo e(route('ams.businessCustomer.index')); ?>"
+                                                class="nav-link">Business Customers List</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- Account of Chart Submenu -->
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="#sidebarAccountChart" data-bs-toggle="collapse"
+                                    role="button" aria-expanded="false" aria-controls="sidebarAccountChart">
+                                    <span>Account of Chart</span>
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarAccountChart">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="<?php echo e(route('ams.chartOfAccounts.add')); ?>" class="nav-link">New Account of Chart</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="<?php echo e(route('ams.chartOfAccounts.index')); ?>" class="nav-link">Account of Chart List</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
-                </li> <!-- end Dashboard Menu -->
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarBusinessCustomer" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarBusinessCustomer">
-                        <i class="las la-columns"></i> <span>Business Customers</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarBusinessCustomer">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="<?php echo e(route('ams.businessCustomer.add')); ?>" class="nav-link">New Business Customer</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="<?php echo e(route('ams.businessCustomer.index')); ?>" class="nav-link">Business Customers List</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> <!-- end BusinessCustomer Menu -->
+                </li> <!-- end Setups Menu -->
+
             </ul>
         </div>
         <!-- Sidebar -->
@@ -83,5 +122,4 @@
 </div>
 <!-- Left Sidebar End -->
 <!-- Vertical Overlay-->
-<div class="vertical-overlay"></div>
-<?php /**PATH /home/ashraf/Documents/web_dev/mis/resources/views/layouts/inc/ams/sidebar.blade.php ENDPATH**/ ?>
+<div class="vertical-overlay"></div><?php /**PATH /home/ashraf/Documents/web_dev/mis/resources/views/layouts/inc/ams/sidebar.blade.php ENDPATH**/ ?>

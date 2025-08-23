@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AMS\ChartOfAccountController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HRM\AclController;
@@ -67,17 +68,17 @@ Route::middleware(['auth'])->group(function () {
 
         Route::middleware(['module.access:hrm'])->group(function () {
             Route::get('/', [HrmHomeController::class, 'index'])->name('.index');
-        Route::get('employee-register', [EmployeeController::class, 'create'])->name('.employee-register');
-        Route::post('employee-save', [EmployeeController::class, 'store'])->name('.employee-save');
+            Route::get('employee-register', [EmployeeController::class, 'create'])->name('.employee-register');
+            Route::post('employee-save', [EmployeeController::class, 'store'])->name('.employee-save');
 
-        Route::get('employees', [EmployeeController::class, 'index'])->name('.all-emp');
+            Route::get('employees', [EmployeeController::class, 'index'])->name('.all-emp');
 
-        Route::get('view-employee-details/{id}', [EmployeeController::class, 'view'])->name('.view-employee-details');
-        Route::get('employee-user-register/{id}', [EmployeeController::class, 'createEmployeeUser'])->name('.employee-user-register');
-        Route::post('employee-user-register', [EmployeeController::class, 'saveEmployeeUser'])->name('.employee-user-register');
+            Route::get('view-employee-details/{id}', [EmployeeController::class, 'view'])->name('.view-employee-details');
+            Route::get('employee-user-register/{id}', [EmployeeController::class, 'createEmployeeUser'])->name('.employee-user-register');
+            Route::post('employee-user-register', [EmployeeController::class, 'saveEmployeeUser'])->name('.employee-user-register');
 
-        Route::get('edit-employee-details/{id}', [EmployeeController::class, 'edit'])->name('.edit-employee-details');
-        Route::post('employee-update', [EmployeeController::class, 'update'])->name('.employee-update');
+            Route::get('edit-employee-details/{id}', [EmployeeController::class, 'edit'])->name('.edit-employee-details');
+            Route::post('employee-update', [EmployeeController::class, 'update'])->name('.employee-update');
 
             /**
              * UPDATED ON 21-06-2024
@@ -92,7 +93,7 @@ Route::middleware(['auth'])->group(function () {
              * END UPDATED ON 21-06-2024
              */
 
-            Route::controller(CompanyController::class)->group(function(){
+            Route::controller(CompanyController::class)->group(function () {
                 Route::get('create-company', 'create')->name('.create-company');
                 Route::post('save-company', 'store')->name('.save-company');
                 Route::get('company-list', 'index')->name('.company-list');
@@ -118,13 +119,23 @@ Route::middleware(['auth'])->group(function () {
             // Route::get('list', 'list')->name('list');
         });
 
-         Route::prefix('businessCustomer')->controller(BusinessCustomerController::class)->name('businessCustomer.')->group(function () {
+        Route::prefix('businessCustomer')->controller(BusinessCustomerController::class)->name('businessCustomer.')->group(function () {
             Route::get('/', 'index')->name('index'); // e.g., /businessCustomer — List businesses
             Route::get('add', 'create')->name('add'); // e.g., /businessCustomer/add — Show create form
             Route::post('save', 'store')->name('save'); // e.g., /businessCustomer/save — Handle form submission
             Route::get('edit/{id}', 'edit')->name('edit'); // e.g., /businessCustomer/edit/{id} — Show edit form
             Route::post('update/{id}', 'update')->name('update'); // e.g., /businessCustomer/update/{id} — Handle form submission
             // Route::get('list', 'list')->name('list');
+        });
+
+        Route::prefix('chartOfAccounts')->controller(ChartOfAccountController::class)->name('chartOfAccounts.')->group(function () {
+            Route::get('/', 'index')->name('index'); // e.g., /chartOfAccount — List chartOfAccounts
+            Route::get('add', 'create')->name('add'); // e.g., /chartOfAccount/add — Show create form
+            Route::post('save', 'store')->name('save'); // e.g., /chartOfAccount/save — Handle form submission
+            Route::get('edit/{id}', 'edit')->name('edit'); // e.g., /chartOfAccount/edit/{id} — Show edit form
+            Route::post('update', 'update')->name('update'); // e.g., /chartOfAccount/update/{id} — Handle form submission
+            Route::delete('delete/{id}', 'delete')->name('delete'); // e.g., /chartOfAccount/update/{id} — Handle form submission
+            Route::post('export', 'export')->name('export'); // e.g., /chartOfAccount/update/{id} — Handle form submission
         });
     });
 
@@ -142,7 +153,7 @@ Route::middleware(['auth'])->group(function () {
         }); */
 
         //Route::get('edit-booking/{id}', [BookingController::class, 'editBooking'])->name('.edit-booking');
-        Route::get('edit-booking/{id}', function(){
+        Route::get('edit-booking/{id}', function () {
             return view('auth-500');
         })->name('.edit-booking');
 
@@ -292,11 +303,11 @@ Route::middleware(['auth'])->group(function () {
             Route::any('booking-status-report/{status}', [BookingController::class, 'statusBasedBookingReport'])->name('.booking-status-report');
         });
 
-        Route::controller(DashboardController::class)->group(function(){
+        Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'index')->name('.dashboard');
         });
 
-        Route::controller(InquiryController::class)->group(function(){
+        Route::controller(InquiryController::class)->group(function () {
             Route::get('create-inquiry', 'createInquiry')->name('.create-inquiry');
             Route::post('save-inquiry', 'saveInquiry')->name('.save-inquiry');
             //Route::get('inquiry-list', 'inquiryList')->name('.inquiry-list');

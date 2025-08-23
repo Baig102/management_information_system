@@ -1,10 +1,12 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="sm-hover" data-sidebar-image="none" data-preloader="enable">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-layout="vertical" data-topbar="light"
+    data-sidebar="dark" data-sidebar-size="sm-hover" data-sidebar-image="none" data-preloader="enable">
 
 <head>
     <meta charset="utf-8" />
     <title>@yield('title') | Seven Zones - CMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" /> -->
     <meta content="Umair Mehmood Khan Lodhi (info.devumair@gmail.com)" name="author" />
     <!-- App favicon -->
