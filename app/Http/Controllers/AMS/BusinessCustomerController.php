@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AMS;
 
+use App\Models\ChartOfAccount;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\BusinessCustomer;
@@ -66,6 +67,17 @@ class BusinessCustomerController extends Controller
             $businessCustomer->created_by = auth()->id() ?? 1; // Assuming 1 is the default user ID if not authenticated
             $businessCustomer->save();
             DB::commit();
+
+            $account = new ChartOfAccount();
+            $account->account_head = $businessCustomer->name;
+            $account->main_group = 'Balance Sheet';
+            $account->sub_group_1 = 'Assets';
+            $account->sub_group_2 = 'Current Assets';
+            $account->detailed_group = 'Trade Debtors';
+            $account->created_by = auth()->id() ?? 1;
+            $account->business_customer_id = $businessCustomer->id;
+            $account->save();
+
             return redirect()->route('ams.businessCustomer.index')->with('success', 'Business customer created successfully.');
         } catch (\Exception $e) {
             DB::rollback();

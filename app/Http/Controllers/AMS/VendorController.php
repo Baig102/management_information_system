@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AMS;
 
+use App\Models\ChartOfAccount;
 use Exception;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -138,6 +139,17 @@ class VendorController extends Controller
                 }
             }
             DB::commit();
+
+            $account = new ChartOfAccount();
+            $account->account_head = $vendor->name;
+            $account->main_group = 'Balance Sheet';
+            $account->sub_group_1 = 'Liabilities';
+            $account->sub_group_2 = 'Current Liabilities';
+            $account->detailed_group = 'Trade Creditors';
+            $account->created_by = auth()->id() ?? 1;
+            $account->vendor_id = $vendor->id;
+            $account->save();
+            
             return redirect()->route('ams.vendor.index')->with('success', 'Vendor Added Successfully');
         } catch (Exception $e) {
             DB::rollback();

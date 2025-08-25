@@ -140,13 +140,13 @@
                     let options = '<option value="">Select Sub 1 Group</option>';
                     if (mainGroup === 'Balance Sheet') {
                         options += `
-                                                            <option value="Equity" {{ $account->sub_group_1 == 'Equity' ? 'selected' : '' }}>Equity</option>
-                                                            <option value="Liabilities" {{ $account->sub_group_1 == 'Liabilities' ? 'selected' : '' }}>Liabilities</option>
-                                                            <option value="Assets" {{ $account->sub_group_1 == 'Assets' ? 'selected' : '' }}>Assets</option>`;
+                                                                    <option value="Equity" {{ $account->sub_group_1 == 'Equity' ? 'selected' : '' }}>Equity</option>
+                                                                    <option value="Liabilities" {{ $account->sub_group_1 == 'Liabilities' ? 'selected' : '' }}>Liabilities</option>
+                                                                    <option value="Assets" {{ $account->sub_group_1 == 'Assets' ? 'selected' : '' }}>Assets</option>`;
                     } else if (mainGroup === 'Profit And Loss Account') {
                         options += `
-                                                            <option value="Incomes" {{ $account->sub_group_1 == 'Incomes' ? 'selected' : '' }}>Incomes</option>
-                                                            <option value="Expenses" {{ $account->sub_group_1 == 'Expenses' ? 'selected' : '' }}>Expenses</option>`;
+                                                                    <option value="Incomes" {{ $account->sub_group_1 == 'Incomes' ? 'selected' : '' }}>Incomes</option>
+                                                                    <option value="Expenses" {{ $account->sub_group_1 == 'Expenses' ? 'selected' : '' }}>Expenses</option>`;
                     }
                     $('#sub1_group').html(options);
                     $('#sub2_group').html('<option value="">Select Sub 2 Group</option>');
@@ -163,24 +163,24 @@
                             options += `<option value="Equity">Equity</option>`;
                         } else if (sub1Group === 'Liabilities') {
                             options += `
-                                                                <option value="Non Current Liabilities">Non Current Liabilities</option>
-                                                                <option value="Current Liabilities">Current Liabilities</option>`;
+                                                                        <option value="Non Current Liabilities">Non Current Liabilities</option>
+                                                                        <option value="Current Liabilities">Current Liabilities</option>`;
                         } else if (sub1Group === 'Assets') {
                             options += `
-                                                                <option value="Non Current Assets">Non Current Assets</option>
-                                                                <option value="Current Assets">Current Assets</option>`;
+                                                                        <option value="Non Current Assets">Non Current Assets</option>
+                                                                        <option value="Current Assets">Current Assets</option>`;
                         }
                     } else if (mainGroup === 'Profit And Loss Account') {
                         if (sub1Group === 'Incomes') {
                             options += `<option value="Sales">Sales</option>`;
                         } else if (sub1Group === 'Expenses') {
                             options += `
-                                                                <option value="Cost of sales">Cost of sales</option>
-                                                                <option value="Admin Expenses">Admin Expenses</option>
-                                                                <option value="Financial Charges">Financial Charges</option>
-                                                                <option value="Selling Expenses">Selling Expenses</option>
-                                                                <option value="Other Expenses">Other Expenses</option>
-                                                                <option value="Taxation">Taxation</option>`;
+                                                                        <option value="Cost of sales">Cost of sales</option>
+                                                                        <option value="Admin Expenses">Admin Expenses</option>
+                                                                        <option value="Financial Charges">Financial Charges</option>
+                                                                        <option value="Selling Expenses">Selling Expenses</option>
+                                                                        <option value="Other Expenses">Other Expenses</option>
+                                                                        <option value="Taxation">Taxation</option>`;
                         }
                     }
                     $('#sub2_group').html(options);
@@ -195,34 +195,34 @@
                     if (mainGroup === 'Balance Sheet') {
                         if (sub1Group === 'Equity' && sub2Group === 'Equity') {
                             options += `
-                                                                <option value="Capital Account">Capital Account</option>
-                                                                <option value="Current Account">Current Account</option>`;
+                                                                        <option value="Capital Account">Capital Account</option>
+                                                                        <option value="Current Account">Current Account</option>`;
                         } else if (sub1Group === 'Liabilities') {
                             if (sub2Group === 'Non Current Liabilities') {
                                 options += `
-                                                                    <option value="Long term liabilities">Long term liabilities</option>
-                                                                    <option value="Long Term Finance Lease">Long Term Finance Lease</option>`;
+                                                                            <option value="Long term liabilities">Long term liabilities</option>
+                                                                            <option value="Long Term Finance Lease">Long Term Finance Lease</option>`;
                             } else if (sub2Group === 'Current Liabilities') {
                                 options += `
-                                                                    <option value="Short Term Liabilities">Short Term Liabilities</option>
-                                                                    <option value="Short Term Finance Lease">Short Term Finance Lease</option>
-                                                                    <option value="Trade Creditors">Trade Creditors</option>
-                                                                    <option value="Advances And Other Payables">Advances And Other Payables</option>
-                                                                    <option value="Taxes Payable">Taxes Payable</option>`;
+                                                                            <option value="Short Term Liabilities">Short Term Liabilities</option>
+                                                                            <option value="Short Term Finance Lease">Short Term Finance Lease</option>
+                                                                            <option value="Trade Creditors">Trade Creditors</option>
+                                                                            <option value="Advances And Other Payables">Advances And Other Payables</option>
+                                                                            <option value="Taxes Payable">Taxes Payable</option>`;
                             }
                         } else if (sub1Group === 'Assets') {
                             if (sub2Group === 'Non Current Assets') {
                                 options += `
-                                                                    <option value="Property Plant And Equipment">Property Plant And Equipment</option>
-                                                                    <option value="Intangible Assets">Intangible Assets</option>
-                                                                    <option value="Long Term Deposits And Pre-Payments">Long Term Deposits And Pre-Payments</option>`;
+                                                                            <option value="Property Plant And Equipment">Property Plant And Equipment</option>
+                                                                            <option value="Intangible Assets">Intangible Assets</option>
+                                                                            <option value="Long Term Deposits And Pre-Payments">Long Term Deposits And Pre-Payments</option>`;
                             } else if (sub2Group === 'Current Assets') {
                                 options += `
-                                                                    <option value="Stores And Stock in Hand">Stores And Stock in Hand</option>
-                                                                    <option value="Trade Debtors">Trade Debtors</option>
-                                                                    <option value="Short Term Advances">Short Term Advances</option>
-                                                                    <option value="Other Receivable">Other Receivable</option>
-                                                                    <option value="Cash And Bank Balance">Cash And Bank Balance</option>`;
+                                                                            <option value="Stores And Stock in Hand">Stores And Stock in Hand</option>
+                                                                            <option value="Trade Debtors">Trade Debtors</option>
+                                                                            <option value="Short Term Advances">Short Term Advances</option>
+                                                                            <option value="Other Receivable">Other Receivable</option>
+                                                                            <option value="Cash And Bank Balance">Cash And Bank Balance</option>`;
                             }
                         }
                     } else if (mainGroup === 'Profit And Loss Account') {
@@ -324,6 +324,8 @@
 
         function resetAccountHead() {
             $('#account_head').val('');
+            $('#customer_id').val('');
+            $('#vendor_id').val('');
             $('#account_head').removeAttr('readonly');
             $('#account_head').removeClass('highlight-bg');
         }

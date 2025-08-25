@@ -7,9 +7,6 @@
             <th>Sub Group 1</th>
             <th>Sub Group 2</th>
             <th>Detailed Group</th>
-            <th>Sales</th>
-            <th>Vendor</th>
-            <th>Business Customer</th>
             <th>Created At</th>
         </tr>
     </thead>
@@ -22,9 +19,6 @@
                 <td>{{ $account->sub_group_1 }}</td>
                 <td>{{ $account->sub_group_2 }}</td>
                 <td>{{ $account->detailed_group }}</td>
-                <td>{{ $account->sales }}</td>
-                <td>{{ $account->vendor->name ?? 'N/A' }}</td>
-                <td>{{ $account->customer->name ?? 'N/A' }}</td>
                 <td>{{ $account->created_at }}</td>
             </tr>
         @endforeach

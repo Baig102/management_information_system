@@ -96,7 +96,6 @@
                                     <th>Sub Group 1</th>
                                     <th>Sub Group 2</th>
                                     <th>Detailed Group</th>
-                                    <th>Sales</th>
                                     <th>Created By</th>
                                     <th>Created On</th>
                                     <th>Action</th>
@@ -111,7 +110,6 @@
                                         <td>{{ $account['sub_group_1'] }}</td>
                                         <td>{{ $account['sub_group_2'] }}</td>
                                         <td>{{ $account['detailed_group'] }}</td>
-                                        <td>{{ $account['sales'] ?? '-' }}</td>
                                         <td>{{userDetails($account['created_by'])->name}}</td>
                                         <td>{{ $account['created_at'] }}</td>
                                         <td>

@@ -228,6 +228,8 @@ $(function () {
 
     function resetAccountHead() {
         $('#account_head').val('');
+        $('#customer_id').val('');
+        $('#vendor_id').val('');
         $('#account_head').removeAttr('readonly');
         $('#account_head').removeClass('highlight-bg');
     }
