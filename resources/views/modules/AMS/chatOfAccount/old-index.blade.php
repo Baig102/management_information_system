@@ -13,12 +13,11 @@
     AMS
     @endslot
     @endcomponent
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex p-2">
-                    <h4 class="card-title mb-0 flex-grow-1">Chart Of Account Search</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Chart Of Accounts List</h4>
                     <div class="flex-shrink-0">
                         @if (Auth::user()->role <= 3)
                             <button type="button" id="exportToExcelBtn" class="btn btn-soft-info btn-sm material-shadow-none">
@@ -30,60 +29,6 @@
                                 class="ri-numbers-line label-icon align-middle fs-16 me-2"></i> Add Chart of Account</a>
                     </div>
                 </div><!-- end card header -->
-                <form action="{{ route('ams.chartOfAccounts.index') }}" method="get" id="accountSearchForm"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <div class="card-body bg-light">
-                        <div class="row">
-                            <div class="col-lg-2 col-md-6 mb-3">
-                                <label>Main Group</label>
-                                <select class="form-select main_group" id="main_group" name="main_group">
-                                    <option value="">Select Main Group</option>
-                                    <option value="Balance Sheet">Balance Sheet</option>
-                                    <option value="Profit And Loss Account">Profit And Loss Account</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2 col-md-6 mb-3">
-                                <label>Sub 1 Group</label>
-                                <select class="form-select sub1_group" id="sub1_group" name="sub1_group">
-                                    <option value="">Select Sub 1 Group</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2 col-md-6 mb-3">
-                                <label>Sub 2 Group</label>
-                                <select class="form-select sub2_group" id="sub2_group" name="sub2_group">
-                                    <option value="">Select Sub 2 Group</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2 col-md-6 mb-3">
-                                <label>Detailed Group</label>
-                                <select class="form-select detailed_group" id="detailed_group" name="detailed_group">
-                                    <option value="">Select Detailed Group</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2 col-md-6 hstack gap-2 justify-content-end">
-                                <button type="button" onclick="window.location.reload()" class="btn btn-danger">
-                                    <i class="ri-restart-line me-1 align-bottom"></i> Reset
-                                </button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="ri-equalizer-fill me-1 align-bottom"></i> Search
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header align-items-center d-flex p-2">
-                    <h4 class="card-title mb-0 flex-grow-1">Chart Of Accounts List</h4>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="buttons-datatables" class="table table-bordered nowrap table-striped align-middle"
@@ -97,6 +42,8 @@
                                     <th>Sub Group 2</th>
                                     <th>Detailed Group</th>
                                     <th>Sales</th>
+                                    <th>Vender</th>
+                                    <th>Business Customer</th>
                                     <th>Created By</th>
                                     <th>Created On</th>
                                     <th>Action</th>
@@ -111,7 +58,9 @@
                                         <td>{{ $account['sub_group_1'] }}</td>
                                         <td>{{ $account['sub_group_2'] }}</td>
                                         <td>{{ $account['detailed_group'] }}</td>
-                                        <td>{{ $account['sales'] ?? '-' }}</td>
+                                        <td>{{ $account['sales'] }}</td>
+                                        <td>{{ $account->vendor['name'] ?? '-' }}</td>
+                                        <td>{{ $account->customer['name'] ?? '-' }}</td>
                                         <td>{{userDetails($account['created_by'])->name}}</td>
                                         <td>{{ $account['created_at'] }}</td>
                                         <td>
@@ -141,45 +90,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div><!--end row-->
 @endsection
 
+
+
 @section('script')
-    <script src="{{ URL::asset('build/js/ams-custom.js') }}"></script>
     <script>
-        $(document).ready(function () {
-            $('#accountSearchForm').on('submit', function (e) {
-                e.preventDefault();
-                $('#buttons-datatables').html('<tr><td colspan="12" class="text-center">Loading...</td></tr>');
-                var formData = $(this).serialize();
-                $.ajax({
-                    url: "{{ route('ams.chartOfAccounts.index') }}",
-                    type: "GET",
-                    data: formData,
-                    success: function (response) {
-                        var newTable = $(response).find('#buttons-datatables').html();
-                        $('#buttons-datatables').html(newTable);
-                        if ($.fn.DataTable.isDataTable('#buttons-datatables')) {
-                            $('#buttons-datatables').DataTable().destroy();
-                        }
-                        $('#buttons-datatables').DataTable({
-                            dom: 'Bfrtip',
-                            buttons: ['copy', 'csv', 'print'],
-                            order: [[0, 'desc']],
-                        });
-                    },
-                    error: function () {
-                        $('#buttons-datatables').html('<tr><td colspan="12" class="text-center">Error loading data</td></tr>');
-                    }
-                });
-            });
-
-            $('button[type="reset"]').on('click', function () {
-                $('#main_group, #sub1_group, #sub2_group, #detailed_group').val('');
-
-                $('#accountSearchForm').trigger('submit');
-            });
-        });
         function deleteRecord(id) {
             Swal.fire({
                 title: "Are you sure?",
@@ -201,6 +118,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
+
                     $.ajax({
                         url: '{{ url("ams/chartOfAccounts/delete") }}/' + id,
                         type: 'DELETE',
@@ -249,7 +167,7 @@
         $('#exportToExcelBtn').on('click', function () {
             let ids = [];
             $('#buttons-datatables tbody tr').each(function () {
-                ids.push($(this).find('td:first').text());
+                ids.push($(this).find('td:first').text()); 
             });
             $.ajax({
                 url: "{{ route('ams.chartOfAccounts.export') }}",
@@ -259,7 +177,7 @@
                     account_ids: ids
                 },
                 xhrFields: {
-                    responseType: 'blob'
+                    responseType: 'blob' 
                 },
                 success: function (data) {
                     let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

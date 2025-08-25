@@ -129,13 +129,13 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::prefix('chartOfAccounts')->controller(ChartOfAccountController::class)->name('chartOfAccounts.')->group(function () {
-            Route::get('/', 'index')->name('index'); // e.g., /chartOfAccount — List chartOfAccounts
-            Route::get('add', 'create')->name('add'); // e.g., /chartOfAccount/add — Show create form
-            Route::post('save', 'store')->name('save'); // e.g., /chartOfAccount/save — Handle form submission
-            Route::get('edit/{id}', 'edit')->name('edit'); // e.g., /chartOfAccount/edit/{id} — Show edit form
-            Route::post('update', 'update')->name('update'); // e.g., /chartOfAccount/update/{id} — Handle form submission
-            Route::delete('delete/{id}', 'delete')->name('delete'); // e.g., /chartOfAccount/update/{id} — Handle form submission
-            Route::post('export', 'export')->name('export'); // e.g., /chartOfAccount/update/{id} — Handle form submission
+            Route::get('/', 'index')->name('index');
+            Route::get('add', 'create')->name('add');
+            Route::post('save', 'store')->name('save');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::post('update', 'update')->name('update');
+            Route::delete('delete/{id}', 'delete')->name('delete');
+            Route::post('export', 'export')->name('export');
         });
     });
 

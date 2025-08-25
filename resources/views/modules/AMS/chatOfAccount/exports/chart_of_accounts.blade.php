@@ -23,8 +23,8 @@
                 <td>{{ $account->sub_group_2 }}</td>
                 <td>{{ $account->detailed_group }}</td>
                 <td>{{ $account->sales }}</td>
-                <td>{{ $account->vendor->name ?? '-' }}</td>
-                <td>{{ $account->customer->name ?? '-' }}</td>
+                <td>{{ $account->vendor->name ?? 'N/A' }}</td>
+                <td>{{ $account->customer->name ?? 'N/A' }}</td>
                 <td>{{ $account->created_at }}</td>
             </tr>
         @endforeach

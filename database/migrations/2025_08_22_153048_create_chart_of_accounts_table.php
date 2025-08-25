@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('sub_group_2');
             $table->string('detailed_group');
             $table->string('sales')->nullable();
+            $table->softDeletes();
+            $table->foreignId('deleted_by')->nullable()->references('id')->on('users');
             $table->timestamps();
         });
     }
